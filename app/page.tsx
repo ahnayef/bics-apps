@@ -3,18 +3,18 @@ import { useState } from "react";
 import Image from "next/image";
 
 const demoApps = [
-  { id: 1, name: "নবীন", theme: "blue", icon: "/logo/nabin.webp", downloadLink: "apps/nobin.apk" },
-  { id: 2, name: "তরুণ", theme: "orange", icon: "/logo/tarun.png", downloadLink: "apps/tarun.apk" },
-  { id: 3, name: "অগ্রদূত", theme: "green", icon: "/logo/ogrodut.webp", downloadLink: "apps/ogrodut.apk" },
+  { id: 1, name: "নবীন", theme: "blue", icon: "/logo/nabin.webp", downloadLink: "https://github.com/ahnayef/bics-apps/raw/refs/heads/main/public/apps/nobin.apk" },
+  { id: 2, name: "তরুণ", theme: "orange", icon: "/logo/tarun.png", downloadLink: "https://github.com/ahnayef/bics-apps/raw/refs/heads/main/public/apps/tarun.apk" },
+  { id: 3, name: "অগ্রদূত", theme: "green", icon: "/logo/ogrodut.webp", downloadLink: "https://github.com/ahnayef/bics-apps/raw/refs/heads/main/public/apps/ogrodut.apk" },
 ];
 
-const themeBackgrounds: any = {
+const themeBackgrounds: { blue: string, orange: string, green: string } = {
   blue: "bg-gradient-to-br from-blue-100 to-blue-300",
   orange: "bg-gradient-to-br from-orange-100 to-orange-300",
   green: "bg-gradient-to-br from-green-100 to-green-300",
 };
 
-const themeClasses: any = {
+const themeClasses: { blue: { border: string, title: string, button: string, gradientDefault: string }, orange: { border: string, title: string, button: string, gradientDefault: string }, green: { border: string, title: string, button: string, gradientDefault: string } } = {
   blue: {
     border: "border-blue-500",
     title: "text-blue-700",
@@ -36,10 +36,10 @@ const themeClasses: any = {
 };
 
 export default function Home() {
-  const [hoveredTheme, setHoveredTheme] = useState<string | null>(null);
+  const [hoveredTheme, setHoveredTheme] = useState<keyof typeof themeBackgrounds | null>(null);
 
   const mainBackground = hoveredTheme
-    ? themeBackgrounds[hoveredTheme]
+    ? themeBackgrounds[hoveredTheme as keyof typeof themeBackgrounds]
     : "bg-white";
 
   return (
@@ -47,12 +47,12 @@ export default function Home() {
       <div className="container mx-auto px-4">
         <section className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {demoApps.map((app) => {
-            const theme = themeClasses[app.theme];
+            const theme = themeClasses[app.theme as keyof typeof themeClasses];
             return (
               <div
                 key={app.id}
                 className={`relative group rounded-md overflow-hidden sm:shadow-xl lg:shadow-2xl transition hover:scale-105 ${theme.border} cursor-help`}
-                onMouseEnter={() => setHoveredTheme(app.theme)}
+                onMouseEnter={() => setHoveredTheme(app.theme as keyof typeof themeBackgrounds)}
                 onMouseLeave={() => setHoveredTheme(null)}
               >
                 <div
@@ -78,7 +78,7 @@ export default function Home() {
                     </svg>
 
                     <span>
-                    ডাউনলোড
+                      ডাউনলোড
                     </span>
                   </a>
                 </div>
