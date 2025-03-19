@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <main className={`min-h-screen transition-colors duration-300 flex justify-center align-middle items-center ${mainBackground}`}>
       <div className="container mx-auto px-4">
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <section className="py-10 grid grid-cols-1 md:grid-cols-3 gap-12">
           {demoApps.map((app) => {
             const theme = themeClasses[app.theme as keyof typeof themeClasses];
             return (
